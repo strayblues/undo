@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Click the buttons to do add, undo or redo</h2>
+
+<button onclick="undo()">Undo</button>
+<button onclick="redo()">Redo</button>
+<input type="" id="input" value="">
+<button onclick="add()">Add</button>
+
+<p id="demo"></p>
+
+<script>
+    var drawing = ['💀', '🦄', '🐌', '🦋', '🐥'],
+        layers = drawing.slice(),
+        numOfLayers = layers.length, // 5
+        userInput;
+    updateDisplay();
+
+    function undo() {
+        if (numOfLayers <= 0) {
+            alert("There's nothing to undo");
+        } else {
+            layers.pop();
+            numOfLayers--;
+        }
+        updateDisplay();
+    }
+
+    function redo() {
+        if (layers == drawing.slice() || (numOfLayers >= drawing.length)) {
+            alert("There's nothing to restore");
+        } else {
+            numOfLayers++;
+            layers.push(drawing[numOfLayers-1]);
+        }
+        updateDisplay();
+    }
+
+    function add() {
+        userInput = document.getElementById("input").value;
+        document.getElementById("demo").innerHTML = userInput;
+        numOfLayers++;
+        layers.push(userInput);
+        updateDrawing();
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        document.getElementById("demo").innerHTML = layers.join(" ");
+    }
+
+    function updateDrawing() {
+        drawing = layers;
+        layers = drawing.slice();
+    }
+</script>
+
+</body>
+</html>
